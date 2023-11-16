@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.morada.todosimple.models.User;
-import com.morada.todosimple.repositories.TaskRepository;
 import com.morada.todosimple.repositories.UserRepository;
 
 @Service
@@ -16,9 +15,6 @@ public class UserService {
     
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private TaskRepository taskRepository;
 
     public User FindById(Long id) {
         Optional<User> user = this.userRepository.findById(id);
@@ -28,8 +24,8 @@ public class UserService {
 
     @Transactional
     public User create(User obj) {
+        obj.setId(null);
         obj = this.userRepository.save(obj);
-        this.taskRepository.saveAll(obj.getTasks());
         return obj;
     }
 
