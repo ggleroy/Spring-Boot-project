@@ -51,4 +51,8 @@ public class TaskService {
         }
     }
 
+    public Task findAllByUserId(Long userId) {
+        return this.taskRepository.findAllByUserId(userId);
+    }
+
 }
