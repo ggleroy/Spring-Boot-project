@@ -1,5 +1,6 @@
 package com.morada.todosimple.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -51,8 +52,14 @@ public class TaskService {
         }
     }
 
-    public Task findAllByUserId(Long userId) {
-        return this.taskRepository.findAllByUserId(userId);
+    public List<Task> findAllByUserId(Long userId) {
+        List<Task> tasks = this.taskRepository.findAllByUserId(userId);
+        if (tasks.isEmpty()) {
+            throw new RuntimeException(
+                "Nenhuma tarefa encontrada para o usuário com ID: " + userId);
+        }
+        return tasks;
     }
+    
 
 }
