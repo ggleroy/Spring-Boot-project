@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.morada.todosimple.models.Task;
 import com.morada.todosimple.models.User;
 import com.morada.todosimple.repositories.TaskRepository;
+import com.morada.todosimple.services.exceptions.DataBindingViolationException;
 
 @Service
 public class TaskService {
@@ -48,7 +49,7 @@ public class TaskService {
         try {
             this.taskRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Nao foi possivel deletar pois ha entidades relacionadas.");
+            throw new DataBindingViolationException("Nao foi possivel deletar pois ha entidades relacionadas.");
         }
     }
 
