@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.morada.todosimple.models.User;
 import com.morada.todosimple.repositories.UserRepository;
+import com.morada.todosimple.services.exceptions.ObjectNotFoundException;
+import com.morada.todosimple.services.exceptions.DataBindingViolationException;
 
 @Service
 public class UserService {
@@ -18,7 +20,7 @@ public class UserService {
 
     public User FindById(Long id) {
         Optional<User> user = this.userRepository.findById(id);
-        return user.orElseThrow(() -> new RuntimeException(
+        return user.orElseThrow(() -> new ObjectNotFoundException(
             "Usuário não encontrado! Id: "+ id + ", Tipo: " + User.class.getName()));
     }
 
@@ -40,7 +42,7 @@ public class UserService {
         try {
             this.userRepository.deleteById(id);
         } catch (Exception e) {
-            throw new RuntimeException("Nao foi possivel deletar pois ha entidades relacionadas.");
+            throw new DataBindingViolationException("Nao foi possivel deletar pois ha entidades relacionadas.");
         }
     }
 }
